@@ -1,0 +1,9 @@
+# Extended regexes matching debian/control lines to strip for the noble build.
+# One per line; a regex that matches nothing fails the build.
+#
+# noble's archive has no python3-orjson in any component, so the Depends line
+# has to go or python3-mashumaro is uninstallable there. mashumaro reaches
+# orjson only through mashumaro.codecs.orjson, which nothing on noble could
+# use anyway. Drop this file when noble gains python3-orjson, which it will
+# not.
+^ python3-orjson,$

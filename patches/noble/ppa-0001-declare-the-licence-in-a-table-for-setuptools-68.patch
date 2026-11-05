@@ -1,0 +1,38 @@
+Description: Declare the licence the way noble's setuptools understands
+ mashumaro 3.17 moved to PEP 639: "license" is now an SPDX expression
+ string and the build system asks for setuptools 77. noble carries
+ setuptools 68.1.2, which validates pyproject.toml against the older
+ schema, where "license" must be a table with either a "file" or a "text"
+ key -- a bare string matches both definitions and is rejected outright:
+ .
+   ValueError: invalid pyproject.toml config: `project.license`.
+   configuration error: `project.license` must be valid exactly by one
+   definition (2 matches found)
+ .
+ So the licence goes back into a table and the build-system requirement
+ drops its floor. The declared licence is the same Apache-2.0 either way,
+ and the wheel's metadata carries it in the older field; nothing in the
+ built package differs but the spelling.
+ .
+ resolute and stonking need none of this -- their own archives build this
+ source package -- so the patch is in patches/noble/ and is applied to the
+ noble build alone.
+Author: Robert August Vincent II (Bob) <pillarsdotnet@gmail.com>
+Forwarded: not-needed
+Last-Update: 2026-11-05
+--- a/pyproject.toml	2026-11-05 09:49:01.872967679 -0500
++++ b/pyproject.toml	2026-11-05 09:49:01.884525898 -0500
+@@ -1,11 +1,11 @@
+ [build-system]
+ build-backend = "setuptools.build_meta"
+-requires = ["setuptools>=77.0"]
++requires = ["setuptools"]
+ 
+ [project]
+ name = "mashumaro"
+ version = "3.17"
+-license = "Apache-2.0"
++license = { text = "Apache-2.0" }
+ description = "Fast and well tested serialization library"
+ readme = "README.md"
+ authors = [{ name = "Alexander Tikhonov", email = "random.gauss@gmail.com" }]
