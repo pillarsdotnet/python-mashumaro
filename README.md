@@ -18,7 +18,7 @@ The archive now carries 3.17, which imports `evaluate_forward_ref` and
 `typing_extensions` 4.13, so upstream's `>= 4.14.0` floor is a real one, and
 `${python3:Depends}` comes out as:
 
-```
+```text
 Depends: python3-msgpack, python3-tomli-w, python3-yaml,
          python3-typing-extensions (>= 4.14.0), python3:any
 ```
@@ -26,13 +26,13 @@ Depends: python3-msgpack, python3-tomli-w, python3-yaml,
 noble ships `python3-typing-extensions` **4.10.0**, and no noble pocket —
 release, updates, security or backports — has anything newer:
 
-```
+```text
 python-typing-extensions | 4.10.0-1 | noble
 python-typing-extensions | 4.15.0-2 | resolute
 python-typing-extensions | 4.16.0-5 | stonking
 ```
 
-So the deb installs nowhere on noble. The *build* is fine: it was run
+So the deb installs nowhere on noble. The _build_ is fine: it was run
 end to end in an `ubuntu:24.04` container on 2026-11-05 and produced
 `python3-mashumaro_3.17-1~ppa1~ubuntu24.04.1_all.deb`. It is the result that
 has no use, which is why nothing is scheduled rather than something being
@@ -48,7 +48,7 @@ that tracks the Ubuntu archive cannot reach it.
 
 Everything the build needs, and no workflow to run it.
 
-```
+```text
 patches/noble/       # appended to the distribution's own series
     ppa-0001-declare-the-licence-in-a-table-for-setuptools-68.patch
     series
@@ -70,9 +70,9 @@ The two pieces of delta are kept because they are correct and were paid for:
   table. 3.17 moved to PEP 639, so `pyproject.toml` declares a bare SPDX
   string, and noble's `setuptools` 68.1.2 validates against the older
   schema, where `license` must be a table with either a `file` or a `text`
-  key. A bare string matches *both* definitions, so it is valid by neither:
+  key. A bare string matches _both_ definitions, so it is valid by neither:
 
-  ```
+  ```text
   ValueError: invalid pyproject.toml config: `project.license`.
   configuration error: `project.license` must be valid exactly by one
   definition (2 matches found)
@@ -97,8 +97,8 @@ Adding `.forgejo/workflows/registry.yml` is the whole job. Copy
 copy and give it one matrix entry:
 
 ```yaml
-          - series: noble
-            release: "24.04"
+- series: noble
+  release: "24.04"
 ```
 
 Do that when **either** of these becomes true:
@@ -118,5 +118,5 @@ packages import, fleet-wide, to unblock one.
 - [`python-kasa`](https://forgejo.bobbalisa.org/pillarsdotnet/python-kasa) —
   what wanted this; its noble build keeps its `nocheck` fallback.
 - [`python-ajsonrpc`](https://forgejo.bobbalisa.org/pillarsdotnet/python-ajsonrpc)
-  — the same arrangement for a gap that *could* be closed, and the script
+  — the same arrangement for a gap that _could_ be closed, and the script
   this one is derived from.
